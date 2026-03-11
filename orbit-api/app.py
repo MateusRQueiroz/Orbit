@@ -45,5 +45,22 @@ def get_entry(entry_id):
     
     return jsonify(entry)
 
+@app.route("/entries", methods = ["POST"])
+def create_entry():
+    data = request.get_json()
+
+    new_entry = {
+        "id": max(o["id"] for o in orbits) + 1 if orbits else 1,
+        "text": data.get("text"),
+        "mood": data.get("mood"),
+        "create_at": data.get("created_at"),
+        "photo_url": data.get("photo_url"),
+    }
+
+    orbits.append(new_entry)
+
+    return jsonify(new_entry), 201
+
+
 if __name__ == '__main__':
     app.run(debug = True)
