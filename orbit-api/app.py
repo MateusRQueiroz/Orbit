@@ -88,5 +88,19 @@ def update_entry(entry_id):
 
     return jsonify(entry), 200
 
+@app.route("/entries/<int:entry_id>", methods=["DELETE"])
+def delete_entry(entry_id):
+    global orbits
+
+    entry = next((o for o in orbits if o["id"] == entry_id), None)
+
+    if entry is None:
+        return jsonify({"error": "Entry not found"}), 404
+
+    orbits = [o for o in orbits if o["id"] != entry_id]
+
+    return jsonify({"message": "Entry deleted"}), 200
+
+
 if __name__ == '__main__':
     app.run(debug = True)
