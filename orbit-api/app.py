@@ -32,7 +32,7 @@ def entries():
     results = orbits 
     mood = request.args.get("mood")
     if mood: 
-        results = [o for o in results]
+        results = [o for o in results if o["mood"] == mood]
     
     return jsonify(results)
 
